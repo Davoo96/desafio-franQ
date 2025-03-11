@@ -14,6 +14,9 @@ export default function Stocks({
           if (stockCode === "source" || typeof details === "string")
             return null;
 
+          const variationColor =
+            details.variation >= 0 ? "text-green-600" : "text-red-600";
+
           return (
             <li key={stockCode} className="p-4 border rounded-lg shadow-sm">
               <Link href={`/financas/${details.name}`} scroll={false}>
@@ -24,7 +27,9 @@ export default function Stocks({
                   Buy: {details.location ?? "N/A"}
                 </p>
                 <p className="text-gray-600">Sell: {details.points ?? "N/A"}</p>
-                <p className="text-gray-600">Variation: {details.variation}%</p>
+                <p className={variationColor}>
+                  Variation: {details.variation}%
+                </p>
               </Link>
             </li>
           );

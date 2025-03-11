@@ -13,6 +13,9 @@ export default function Currencies({
           if (currencyCode === "source" || typeof details === "string")
             return null;
 
+          const variationColor =
+            details.variation >= 0 ? "text-green-600" : "text-red-600";
+
           return (
             <li key={currencyCode} className="p-4 border rounded-lg shadow-sm">
               <Link href={`/financas/${details.name}`} scroll={false}>
@@ -21,7 +24,9 @@ export default function Currencies({
                 </h2>
                 <p className="text-gray-600">Buy: {details.buy ?? "N/A"}</p>
                 <p className="text-gray-600">Sell: {details.sell ?? "N/A"}</p>
-                <p className="text-gray-600">Variation: {details.variation}%</p>
+                <p className={variationColor}>
+                  Variation: {details.variation}%
+                </p>
               </Link>
             </li>
           );
