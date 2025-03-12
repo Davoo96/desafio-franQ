@@ -1,3 +1,4 @@
+import StoreProvider from "@/providers/store-provider";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -27,7 +28,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="grid grid-cols-1 px-10 py-24">{children}</div>
+        <StoreProvider>
+          <div className="grid grid-cols-1 px-10 py-24">{children}</div>
+        </StoreProvider>
       </body>
     </html>
   );

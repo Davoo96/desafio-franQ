@@ -1,13 +1,15 @@
 "use server";
 
-type CurrencyDetails = {
+export type CurrencyDetails = {
+  timestamp?: string;
   name: string;
   buy: number | null;
   sell: number | null;
   variation: number;
 };
 
-type StocksDetails = {
+export type StocksDetails = {
+  timestamp?: string;
   name: string;
   location: string;
   points: number;
