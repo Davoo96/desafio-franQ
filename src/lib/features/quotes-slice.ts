@@ -1,19 +1,16 @@
 import {
   CurrencyDetails,
-  getFinances,
+  getQuotes,
   StocksDetails,
-} from "@/actions/get-finances";
+} from "@/actions/get-quotes";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export const fetchFinances = createAsyncThunk(
-  "finances/fetchFinances",
-  async () => {
-    const data = await getFinances();
-    return data;
-  }
-);
+export const fetchQuotes = createAsyncThunk("quotes/fetchQuotes", async () => {
+  const data = await getQuotes();
+  return data;
+});
 
-type FinancesState = {
+type QuotesState = {
   selectedCurrency: string | null;
   selectedStock: string | null;
   currencies: { [currencyCode: string]: CurrencyDetails[] };
@@ -21,7 +18,7 @@ type FinancesState = {
   isLoading: boolean;
 };
 
-const initialState: FinancesState = {
+const initialState: QuotesState = {
   selectedCurrency: null,
   selectedStock: null,
   isLoading: false,
@@ -29,8 +26,8 @@ const initialState: FinancesState = {
   stocks: {},
 };
 
-const financesSlice = createSlice({
-  name: "finances",
+const quotesSlice = createSlice({
+  name: "quotes",
   initialState,
   reducers: {
     setSelectedCurrency(state, action) {
@@ -57,10 +54,10 @@ const financesSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchFinances.pending, (state) => {
+    builder.addCase(fetchQuotes.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(fetchFinances.fulfilled, (state, action) => {
+    builder.addCase(fetchQuotes.fulfilled, (state, action) => {
       state.isLoading = false;
       const data = action.payload;
       if (!data) return;
@@ -70,6 +67,7 @@ const financesSlice = createSlice({
           if (currencyCode === "source" || typeof details === "string") return;
 
           const currency: CurrencyDetails = {
+            timestamp: new Date().getTime().toString(),
             name: details.name,
             buy: details.buy,
             sell: details.sell,
@@ -88,6 +86,7 @@ const financesSlice = createSlice({
         if (typeof details === "string") return;
 
         const stock: StocksDetails = {
+          timestamp: new Date().getTime().toString(),
           name: details.name,
           points: details.points,
           variation: details.variation,
@@ -109,6 +108,6 @@ export const {
   setSelectedStock,
   addCurrencies,
   addStocks,
-} = financesSlice.actions;
+} = quotesSlice.actions;
 
-export default financesSlice.reducer;
+export default quotesSlice.reducer;

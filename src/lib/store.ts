@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import financesSlice from "@/lib/features/finances-slice";
+import quotesSlice from "@/lib/features/quotes-slice";
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      finances: financesSlice,
+      quotes: quotesSlice,
     },
   });
 };

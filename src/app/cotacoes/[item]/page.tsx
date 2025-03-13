@@ -2,15 +2,15 @@
 
 import GraphComponent from "@/components/graph/graph";
 import {
-  fetchFinances,
+  fetchQuotes,
   setSelectedCurrency,
   setSelectedStock,
-} from "@/lib/features/finances-slice";
+} from "@/lib/features/quotes-slice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import Link from "next/link";
 import { use, useEffect } from "react";
 
-export default function FinancesItemPage({
+export default function QuotesItemPage({
   params,
 }: {
   params: Promise<{ item: string; isCurrency: boolean }>;
@@ -18,8 +18,8 @@ export default function FinancesItemPage({
   const { item, isCurrency } = use(params);
   const selectedItem = decodeURIComponent(item);
   const dispatch = useAppDispatch();
-  const { selectedCurrency } = useAppSelector((state) => state.finances);
-  const { selectedStock } = useAppSelector((state) => state.finances);
+  const { selectedCurrency } = useAppSelector((state) => state.quotes);
+  const { selectedStock } = useAppSelector((state) => state.quotes);
 
   useEffect(() => {
     if (selectedCurrency !== null || selectedStock !== null) return;
@@ -28,12 +28,12 @@ export default function FinancesItemPage({
     } else {
       dispatch(setSelectedStock(selectedItem));
     }
-    dispatch(fetchFinances());
+    dispatch(fetchQuotes());
   }, [dispatch, isCurrency, selectedCurrency, selectedItem, selectedStock]);
 
   return (
     <main>
-      <Link href="/financas" scroll={false}>
+      <Link href="/cotacoes" scroll={false}>
         back
       </Link>
       <h1>Item: {selectedItem}</h1>

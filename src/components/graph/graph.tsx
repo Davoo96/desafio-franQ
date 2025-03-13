@@ -13,15 +13,13 @@ import {
 
 const GraphComponent = () => {
   const selectedCurrency = useSelector(
-    (state: RootState) => state.finances.selectedCurrency
+    (state: RootState) => state.quotes.selectedCurrency
   );
   const selectedStock = useSelector(
-    (state: RootState) => state.finances.selectedStock
+    (state: RootState) => state.quotes.selectedStock
   );
-  const currencies = useSelector(
-    (state: RootState) => state.finances.currencies
-  );
-  const stocks = useSelector((state: RootState) => state.finances.stocks);
+  const currencies = useSelector((state: RootState) => state.quotes.currencies);
+  const stocks = useSelector((state: RootState) => state.quotes.stocks);
 
   const currencyData = Object.values(currencies).find((currency) =>
     currency.find((c) => c.name === selectedCurrency)

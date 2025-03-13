@@ -1,13 +1,13 @@
 "use client";
 
 import Shimmer from "@/components/loading/shimmer";
-import { setSelectedCurrency } from "@/lib/features/finances-slice";
+import { setSelectedStock } from "@/lib/features/quotes-slice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import Link from "next/link";
 
-export default function Currencies() {
+export default function Stocks() {
   const dispatch = useAppDispatch();
-  const { currencies, isLoading } = useAppSelector((state) => state.finances);
+  const { stocks, isLoading } = useAppSelector((state) => state.quotes);
 
   if (isLoading) {
     return (
@@ -23,8 +23,8 @@ export default function Currencies() {
 
   return (
     <ul className="space-y-4 md:space-y-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {currencies &&
-        Object.entries(currencies).map(([currencyCode, detailsArray]) => {
+      {stocks &&
+        Object.entries(stocks).map(([stockCode, detailsArray]) => {
           const latestDetails = detailsArray[detailsArray.length - 1];
 
           if (!latestDetails) return null;
@@ -33,22 +33,22 @@ export default function Currencies() {
             latestDetails.variation >= 0 ? "text-green-600" : "text-red-600";
 
           return (
-            <li key={currencyCode} className="p-4 border rounded-lg shadow-sm">
+            <li key={stockCode} className="p-4 border rounded-lg shadow-sm">
               <Link
-                href={`/financas/${latestDetails.name}?isCurrency=true`}
+                href={`/cotacoes/${latestDetails.name}?isCurrency=false`}
                 scroll={false}
                 onClick={() => {
-                  dispatch(setSelectedCurrency(latestDetails.name));
+                  dispatch(setSelectedStock(latestDetails.name));
                 }}
               >
                 <h2 className="text-xl font-semibold">
-                  {latestDetails.name} ({currencyCode})
+                  {latestDetails.name} ({stockCode})
                 </h2>
                 <p className="text-gray-600">
-                  Compra: {latestDetails.buy ?? "N/A"}
+                  Localização: {latestDetails.location ?? "N/A"}
                 </p>
                 <p className="text-gray-600">
-                  Venda: {latestDetails.sell ?? "N/A"}
+                  Pontos: {latestDetails.points ?? "N/A"}
                 </p>
                 <p className={variationColor}>
                   Variação: {latestDetails.variation}%

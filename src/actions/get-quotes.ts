@@ -45,10 +45,14 @@ export type ApiResponse = {
   };
 };
 
-export async function getFinances(): Promise<ApiResponse | undefined> {
+const isProduction = process.env.NODE_ENV === "production";
+
+export async function getQuotes(): Promise<ApiResponse | undefined> {
   try {
     const response = await fetch(
-      "https://api.hgbrasil.com/finance?key=47c963eb"
+      `https://api.hgbrasil.com/finance/quotations${
+        !isProduction ? "" : `?key=${process.env.HGBRASIL_API_KEY}`
+      }`
     );
     const data = (await response.json()) as ApiResponse;
     return data;

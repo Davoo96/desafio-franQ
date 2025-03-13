@@ -8,7 +8,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div>
-      <Link href="/financas">Ver todas as finanças</Link>
+      <Link href="/cotacoes">Ver todas as cotações</Link>
       <button onClick={logout}>logout</button>
       <Spinner />
       <Shimmer />
