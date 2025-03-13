@@ -18,11 +18,13 @@ type FinancesState = {
   selectedStock: string | null;
   currencies: { [currencyCode: string]: CurrencyDetails[] };
   stocks: { [stocksCode: string]: StocksDetails[] };
+  isLoading: boolean;
 };
 
 const initialState: FinancesState = {
   selectedCurrency: null,
   selectedStock: null,
+  isLoading: false,
   currencies: {},
   stocks: {},
 };
@@ -55,7 +57,11 @@ const financesSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(fetchFinances.pending, (state) => {
+      state.isLoading = true;
+    });
     builder.addCase(fetchFinances.fulfilled, (state, action) => {
+      state.isLoading = false;
       const data = action.payload;
       if (!data) return;
 

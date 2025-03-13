@@ -1,12 +1,26 @@
 "use client";
 
+import Shimmer from "@/components/loading/shimmer";
 import { setSelectedCurrency } from "@/lib/features/finances-slice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import Link from "next/link";
 
 export default function Currencies() {
   const dispatch = useAppDispatch();
-  const { currencies } = useAppSelector((state) => state.finances);
+  const { currencies, isLoading } = useAppSelector((state) => state.finances);
+
+  if (isLoading) {
+    return (
+      <ul className="space-y-4 md:space-y-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {Array.from({ length: 6 }).map((_, index) => (
+          <li key={index}>
+            <Shimmer />
+          </li>
+        ))}
+      </ul>
+    );
+  }
+
   return (
     <ul className="space-y-4 md:space-y-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {currencies &&

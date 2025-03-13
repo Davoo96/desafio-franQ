@@ -4,7 +4,15 @@ import type { NextRequest } from "next/server";
 export function middleware(request: NextRequest) {
   const session = request.cookies.get("session")?.value;
 
-  if (!session) {
+  const isLoggedIn = !!session;
+
+  const { pathname } = request.nextUrl;
+
+  if (isLoggedIn && (pathname === "/login" || pathname === "/register")) {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+
+  if (!isLoggedIn && (pathname === "/" || pathname === "/financas")) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
@@ -12,5 +20,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/financas"],
+  matcher: ["/", "/financas", "/login", "/register"],
 };
