@@ -62,12 +62,28 @@ const quotesSlice = createSlice({
       const data = action.payload;
       if (!data) return;
 
+      const getCurrentTime = () =>
+        new Date().toLocaleTimeString("pt-BR", {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+
+      const shouldAddEntry = (
+        list: (CurrencyDetails | StocksDetails)[],
+        currentTime: string
+      ) => {
+        if (list.length === 0) return true;
+        const lastTimestamp = list[list.length - 1]?.timestamp;
+        return lastTimestamp !== currentTime;
+      };
+
       Object.entries(data.results.currencies).forEach(
         ([currencyCode, details]) => {
           if (currencyCode === "source" || typeof details === "string") return;
 
+          const currentTime = getCurrentTime();
           const currency: CurrencyDetails = {
-            timestamp: new Date().getTime().toString(),
+            timestamp: currentTime,
             name: details.name,
             buy: details.buy,
             sell: details.sell,
@@ -78,15 +94,18 @@ const quotesSlice = createSlice({
             state.currencies[currencyCode] = [];
           }
 
-          state.currencies[currencyCode].push(currency);
+          if (shouldAddEntry(state.currencies[currencyCode], currentTime)) {
+            state.currencies[currencyCode].push(currency);
+          }
         }
       );
 
       Object.entries(data.results.stocks).forEach(([stockCode, details]) => {
         if (typeof details === "string") return;
 
+        const currentTime = getCurrentTime();
         const stock: StocksDetails = {
-          timestamp: new Date().getTime().toString(),
+          timestamp: currentTime,
           name: details.name,
           points: details.points,
           variation: details.variation,
@@ -97,7 +116,9 @@ const quotesSlice = createSlice({
           state.stocks[stockCode] = [];
         }
 
-        state.stocks[stockCode].push(stock);
+        if (shouldAddEntry(state.stocks[stockCode], currentTime)) {
+          state.stocks[stockCode].push(stock);
+        }
       });
     });
   },

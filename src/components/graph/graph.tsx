@@ -22,10 +22,10 @@ const GraphComponent = () => {
   const stocks = useSelector((state: RootState) => state.quotes.stocks);
 
   const currencyData = Object.values(currencies).find((currency) =>
-    currency.find((c) => c.name === selectedCurrency)
+    currency.find((currency) => currency.name === selectedCurrency)
   );
   const stockData = Object.values(stocks).find((stock) =>
-    stock.find((s) => s.name === selectedStock)
+    stock.find((stock) => stock.name === selectedStock)
   );
 
   if ((selectedCurrency && !currencyData) || (selectedStock && !stockData)) {
@@ -33,14 +33,18 @@ const GraphComponent = () => {
   }
 
   const graphData = selectedCurrency
-    ? currencyData?.map((c) => ({
-        value: c.buy || "N/A",
-        secondaryValue: c.sell || "N/A",
+    ? currencyData?.map((currency) => ({
+        timestamp: currency.timestamp,
+        value: currency.buy || "N/A",
+        secondaryValue: currency.sell || "N/A",
       }))
-    : stockData?.map((s) => ({
-        value: s.points || "N/A",
-        secondaryValue: s.variation || "N/A",
+    : stockData?.map((stock) => ({
+        timestamp: stock.timestamp,
+        value: stock.points || "N/A",
+        secondaryValue: stock.variation || "N/A",
       }));
+
+  console.log(graphData);
 
   return (
     <div>
@@ -52,7 +56,7 @@ const GraphComponent = () => {
       </h2>
       <LineChart width={600} height={300} data={graphData}>
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis />
+        <XAxis dataKey="timestamp" />
         <YAxis />
         <Tooltip />
         <Legend />
@@ -60,13 +64,13 @@ const GraphComponent = () => {
           type="monotone"
           dataKey="value"
           stroke="#8884d8"
-          name={selectedCurrency ? "Buy" : "Points"}
+          name={selectedCurrency ? "Compra" : "Pontos"}
         />
         <Line
           type="monotone"
           dataKey="secondaryValue"
           stroke="#6995d9"
-          name={selectedCurrency ? "Sell" : "Variation"}
+          name={selectedCurrency ? "Venda" : "Variação"}
         />
       </LineChart>
     </div>
