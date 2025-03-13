@@ -13,7 +13,9 @@ function FormButton({ isRegistering }: { isRegistering: boolean }) {
       {pending ? (
         <Button disabled={pending}>Enviando...</Button>
       ) : (
-        <Button>{isRegistering ? "Cadastrar" : "Entrar"}</Button>
+        <Button type="submit" className="cursor-pointer">
+          {isRegistering ? "Cadastrar" : "Entrar"}
+        </Button>
       )}
     </>
   );
@@ -33,6 +35,23 @@ export default function LoginForm() {
       (user: { username: string; password: string }) =>
         user.username === username && user.password === password
     );
+
+    if (isRegistering) {
+      const users = JSON.parse(localStorage.getItem("users") || "[]");
+      const userExists = users.some(
+        (user: { username: string }) => user.username === username
+      );
+
+      if (userExists) {
+        setError("Usuário já existe");
+      } else {
+        users.push({ username, password });
+        localStorage.setItem("users", JSON.stringify(users));
+        setError("");
+        alert("Cadastro realizado com sucesso!");
+        setIsRegistering(false);
+      }
+    }
 
     if (user) {
       document.cookie = `session=${JSON.stringify({
