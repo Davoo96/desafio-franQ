@@ -1,9 +1,13 @@
-import Finances from "@/components/finances/finances";
+"use client";
 
-export default async function Home() {
+import { logout } from "@/utils/session";
+import Link from "next/link";
+
+export default function Home() {
   return (
     <div>
-      <Finances />
+      <Link href="/financas">Ver todas as finanças</Link>
+      <button onClick={logout}>logout</button>
     </div>
   );
 }

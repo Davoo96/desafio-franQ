@@ -31,13 +31,13 @@ export default function Stocks() {
                   {latestDetails.name} ({stockCode})
                 </h2>
                 <p className="text-gray-600">
-                  Buy: {latestDetails.location ?? "N/A"}
+                  Localização: {latestDetails.location ?? "N/A"}
                 </p>
                 <p className="text-gray-600">
-                  Sell: {latestDetails.points ?? "N/A"}
+                  Pontos: {latestDetails.points ?? "N/A"}
                 </p>
                 <p className={variationColor}>
-                  Variation: {latestDetails.variation}%
+                  Variação: {latestDetails.variation}%
                 </p>
               </Link>
             </li>

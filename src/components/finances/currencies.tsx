@@ -31,13 +31,13 @@ export default function Currencies() {
                   {latestDetails.name} ({currencyCode})
                 </h2>
                 <p className="text-gray-600">
-                  Buy: {latestDetails.buy ?? "N/A"}
+                  Compra: {latestDetails.buy ?? "N/A"}
                 </p>
                 <p className="text-gray-600">
-                  Sell: {latestDetails.sell ?? "N/A"}
+                  Venda: {latestDetails.sell ?? "N/A"}
                 </p>
                 <p className={variationColor}>
-                  Variation: {latestDetails.variation}%
+                  Variação: {latestDetails.variation}%
                 </p>
               </Link>
             </li>
