@@ -8,11 +8,11 @@ export function middleware(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
 
-  if (isLoggedIn && (pathname === "/login" || pathname === "/register")) {
+  if (isLoggedIn && pathname === "/login") {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
-  if (!isLoggedIn && (pathname === "/" || pathname === "/financas")) {
+  if (!isLoggedIn && (pathname === "/" || pathname.startsWith("/cotacoes"))) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
@@ -20,5 +20,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/financas", "/login", "/register"],
+  matcher: ["/", "/cotacoes/:path*", "/login", "/register"],
 };
