@@ -44,17 +44,15 @@ const GraphComponent = () => {
         secondaryValue: stock.variation || "N/A",
       }));
 
-  console.log(graphData);
-
   return (
     <div>
-      <h2>
+      <h2 className="text-xl font-semibold text-center">
         Gráfico para{" "}
         {selectedCurrency
           ? `cotação do: ${selectedCurrency}`
           : `as ações de: ${selectedStock}`}
       </h2>
-      <LineChart width={600} height={300} data={graphData}>
+      <LineChart className="pr-12" width={550} height={300} data={graphData}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="timestamp" />
         <YAxis />
@@ -66,12 +64,14 @@ const GraphComponent = () => {
           stroke="#8884d8"
           name={selectedCurrency ? "Compra" : "Pontos"}
         />
-        <Line
-          type="monotone"
-          dataKey="secondaryValue"
-          stroke="#6995d9"
-          name={selectedCurrency ? "Venda" : "Variação"}
-        />
+        {selectedCurrency && (
+          <Line
+            type="monotone"
+            dataKey="secondaryValue"
+            stroke="#6995d9"
+            name="Venda"
+          />
+        )}
       </LineChart>
     </div>
   );

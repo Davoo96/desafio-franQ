@@ -1,5 +1,5 @@
-import Currencies from "@/components/quotes/currencies";
-import Stocks from "@/components/quotes/stocks";
+import Currencies from "@/components/quotes/currencies/currencies";
+import Stocks from "@/components/quotes/stocks/stocks";
 import Link from "next/link";
 
 export default function Quotes() {

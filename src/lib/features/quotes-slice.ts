@@ -121,6 +121,10 @@ const quotesSlice = createSlice({
         }
       });
     });
+    builder.addCase(fetchQuotes.rejected, (state) => {
+      state.isLoading = false;
+      console.error("Erro ao buscar cotações");
+    });
   },
 });
 
