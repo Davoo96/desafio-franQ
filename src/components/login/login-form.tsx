@@ -2,7 +2,9 @@
 
 import Button from "@/components/forms/button";
 import Input from "@/components/forms/input";
-import ErrorMessage from "@/components/helper/error-message";
+import ErrorMessage from "@/components/helper/form-message";
+import Spinner from "@/components/loading/spinner";
+import Link from "next/link";
 import { FormEvent, useState } from "react";
 import { useFormStatus } from "react-dom";
 
@@ -11,9 +13,14 @@ function FormButton({ isRegistering }: { isRegistering: boolean }) {
   return (
     <>
       {pending ? (
-        <Button disabled={pending}>Enviando...</Button>
+        <Button disabled={pending}>
+          <Spinner />
+        </Button>
       ) : (
-        <Button type="submit" className="cursor-pointer">
+        <Button
+          type="submit"
+          className="cursor-pointer border-2 border-gray-300 rounded-lg py-2 px-4 mb-6 mt-3 w-full"
+        >
           {isRegistering ? "Cadastrar" : "Entrar"}
         </Button>
       )}
@@ -21,11 +28,15 @@ function FormButton({ isRegistering }: { isRegistering: boolean }) {
   );
 }
 
-export default function LoginForm() {
-  const [isRegistering, setIsRegistering] = useState(false);
+export default function LoginForm({
+  isRegistering = false,
+}: {
+  isRegistering?: boolean;
+}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  const [isError, setIsError] = useState(false);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -43,24 +54,27 @@ export default function LoginForm() {
       );
 
       if (userExists) {
-        setError("Usuário já existe");
+        setIsError(true);
+        return setMessage("Usuário já existe");
       } else {
         users.push({ username, password });
         localStorage.setItem("users", JSON.stringify(users));
-        setError("");
-        alert("Cadastro realizado com sucesso!");
-        setIsRegistering(false);
+        setIsError(false);
+        setMessage("Cadastro realizado com sucesso!");
       }
     }
 
-    if (user) {
+    if (user && !isRegistering) {
+      setIsError(false);
+      setMessage("Login realizado com sucesso!");
       document.cookie = `session=${JSON.stringify({
         username,
         loggedInAt: new Date().getTime(),
       })}; path=/; max-age=${30 * 60}`;
       window.location.href = "/";
-    } else {
-      setError("Usuário ou senha inválidos");
+    } else if (!isRegistering) {
+      setIsError(true);
+      setMessage("Usuário ou senha inválidos");
     }
   };
 
@@ -73,6 +87,7 @@ export default function LoginForm() {
           name="username"
           placeholder="usuário"
           value={username}
+          onBlur={() => setMessage("")}
           onChange={(e) => setUsername(e.target.value)}
         />
         <Input
@@ -81,20 +96,25 @@ export default function LoginForm() {
           name="password"
           placeholder="senha"
           value={password}
+          onBlur={() => setMessage("")}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <ErrorMessage error={error} />
+        <ErrorMessage message={message} isError={isError} />
         <FormButton isRegistering={isRegistering} />
       </form>
       <div>
-        <h2>Cadastre-se</h2>
-        <p>Ainda não possui conta? Cadastre-se no site.</p>
-        <Button
-          className="button"
-          onClick={() => setIsRegistering(!isRegistering)}
+        {!isRegistering && (
+          <>
+            <h2>Cadastre-se</h2>
+            <p>Ainda não possui conta? Cadastre-se no site.</p>
+          </>
+        )}
+        <Link
+          href={isRegistering ? "login" : "cadastro"}
+          className="cursor-pointer underline mb-6 mt-3 w-full"
         >
           {isRegistering ? "Voltar para Login" : "Cadastro"}
-        </Button>
+        </Link>
       </div>
     </>
   );
