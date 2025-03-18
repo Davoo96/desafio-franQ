@@ -40,7 +40,7 @@ Este projeto é uma aplicação web que fornece cotações em tempo real de moed
 
 - Navegue para <https://console.hgbrasil.com/> crie uma conta
 - Após criar conta crie uma chave <https://console.hgbrasil.com/keys>
-- crie um arquivo `.env` a partir do `.env.example` e coloque o valor da sua chave
+- crie um arquivo `.env` a partir do `example.env` e coloque o valor da sua chave
 
 2. **Instale as dependências:**
 
