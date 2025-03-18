@@ -52,7 +52,12 @@ const GraphComponent = () => {
           ? `cotação do: ${selectedCurrency}`
           : `as ações de: ${selectedStock}`}
       </h2>
-      <LineChart className="pr-12" width={550} height={300} data={graphData}>
+      <LineChart
+        className="pr-12 mx-auto my-0"
+        width={550}
+        height={300}
+        data={graphData}
+      >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="timestamp" />
         <YAxis />
