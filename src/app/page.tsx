@@ -2,9 +2,18 @@
 
 import { logout } from "@/utils/session";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  const user = JSON.parse(localStorage.getItem("session") || "{}");
+  const [user, setUser] = useState<{ username?: string }>({});
+
+  useEffect(() => {
+    const sessionData = localStorage.getItem("session");
+    if (sessionData) {
+      setUser(JSON.parse(sessionData));
+    }
+  }, []);
+
   return (
     <div className="h-screen">
       <h1 className="text-4xl text-center">Bem vindo {user?.username}</h1>
