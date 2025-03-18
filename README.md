@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Painel de Cotações de Moedas e Ações
 
-## Getting Started
+## Visão Geral
 
-First, run the development server:
+Este projeto é uma aplicação web que fornece cotações em tempo real de moedas e ações. Os usuários podem visualizar informações detalhadas sobre taxas de câmbio e preços de ações, incluindo dados históricos apresentados em um gráfico interativo. A aplicação também inclui autenticação de usuários, permitindo que eles façam login e logout.
+
+## Funcionalidades
+
+- **Cotações em Tempo Real:** Busca e exibe cotações atualizadas de moedas e ações.
+- **Gráficos Interativos:** Visualiza dados históricos usando gráficos de linha responsivos.
+- **Autenticação de Usuários:** Funcionalidade segura de login e logout.
+- **Design Responsivo:** Otimizado para dispositivos desktop e mobile.
+
+## Tecnologias Utilizadas
+
+- **Frontend:**
+  - [Next.js](https://nextjs.org/) - Framework React para aplicações renderizadas no servidor.
+  - [Tailwind CSS](https://tailwindcss.com/) - Framework CSS utilitário para estilização.
+  - [Recharts](https://recharts.org/) - Biblioteca para criação de gráficos interativos.
+  - [Redux Toolkit](https://redux-toolkit.js.org/) - Gerenciamento de estado para aplicações React.
+- **Backend:**
+  - [Next.js API Routes](https://nextjs.org/docs/api-routes/introduction) - Funções serverless para lógica de backend.
+- **Autenticação:**
+  - [LocalStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) - Para armazenar dados de sessão do usuário.
+- **Ferramentas de Desenvolvimento:**
+  - [TypeScript](https://www.typescriptlang.org/) - Tipagem estática para JavaScript.
+  - [ESLint](https://eslint.org/) - Linting de código para consistência.
+  - [Prettier](https://prettier.io/) - Formatação de código.
+
+## Como Executar o Projeto
+
+1. **Clone o Repositório:**
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+   git clone https://github.com/seu-usuario/seu-repositorio.git
+   cd seu-repositorio
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Instale as dependências:**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+ npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. **Inicie o Servidor de Desenvolvimento:**
 
-## Learn More
+```bash
+ npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+4. **Acesse a Aplicação:**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Abra <http://localhost:3000> no seu navegador.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Estrutura do Projeto
 
-## Deploy on Vercel
+/app - Páginas principais e rotas da aplicação.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+/components - Componentes reutilizáveis em React.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+/lib - Store do Redux, hooks e funções utilitárias.
+
+/public - Arquivos estáticos como imagens e fontes.
+
+/styles - Estilos globais e específicos para componentes.
