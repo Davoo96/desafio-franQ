@@ -48,7 +48,6 @@ export default function LoginForm({
     );
 
     if (isRegistering) {
-      const users = JSON.parse(localStorage.getItem("users") || "[]");
       const userExists = users.some(
         (user: { username: string }) => user.username === username
       );
@@ -61,12 +60,14 @@ export default function LoginForm({
         localStorage.setItem("users", JSON.stringify(users));
         setIsError(false);
         setMessage("Cadastro realizado com sucesso!");
+        window.location.href = "/login";
       }
     }
 
     if (user && !isRegistering) {
       setIsError(false);
       setMessage("Login realizado com sucesso!");
+      localStorage.setItem("session", JSON.stringify(user));
       document.cookie = `session=${JSON.stringify({
         username,
         loggedInAt: new Date().getTime(),

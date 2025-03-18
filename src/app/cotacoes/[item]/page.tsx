@@ -49,10 +49,10 @@ export default function QuotesItemPage({
 
   return (
     <main className="grid place-items-center">
-      <Link href="/cotacoes" scroll={false}>
-        back
+      <Link className="mb-3" href="/cotacoes" scroll={false}>
+        voltar
       </Link>
-      <h1>Item: {selectedItem}</h1>
+      <h1 className="font-bold text-2xl mb-3">Item: {selectedItem}</h1>
       <GraphComponent />
     </main>
   );
