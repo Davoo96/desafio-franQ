@@ -36,6 +36,12 @@ Este projeto é uma aplicação web que fornece cotações em tempo real de moed
    cd seu-repositorio
 ```
 
+2. **Crie uma conta no hgbrasil e uma chave para o env:**
+
+- Navegue para <https://console.hgbrasil.com/> crie uma conta
+- Após criar conta crie uma chave <https://console.hgbrasil.com/keys>
+- crie um arquivo `.env` a partir do `.env.example` e coloque o valor da sua chave
+
 2. **Instale as dependências:**
 
 ```bash
